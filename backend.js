@@ -40,3 +40,14 @@ app.get("/sponsors", async (req, res) => {
     }
   );
 });
+
+/* ------------ Children ------------ */
+app.get("/children", async (req, res) => {
+  connection.query(
+    "SELECT * FROM children ORDER BY fullname;",
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
