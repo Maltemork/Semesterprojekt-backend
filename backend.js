@@ -40,6 +40,23 @@ app.get("/sponsors", async (req, res) => {
     }
   );
 });
+app.post("/sponsors", async (req, res) => {
+  const reqBody = req.body;
+  connection.query(
+    "INSERT INTO sponsors (sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes) VALUES (?, ?, ?, ?, ?, ?)",
+    [
+      reqBody.sponsorName,
+      reqBody.sponsorEmail,
+      reqBody.privatErhverv,
+      reqBody.cprCvr,
+      reqBody.sponsorPhone,
+      reqBody.notes,
+    ],
+    (err, result) => {
+      errorResult(err, result, res);
+    }
+  );
+});
 
 /* ------------ Children ------------ */
 app.get("/children", async (req, res) => {
@@ -47,6 +64,42 @@ app.get("/children", async (req, res) => {
     "SELECT * FROM children ORDER BY fullname;",
     (err, result) => {
       // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+app.post("/children", async (req, res) => {
+  const reqBody = req.body;
+  connection.query(
+    "INSERT INTO children (fullname, gender, birthdate, school, schoolStart, class) VALUES (?, ?, ?, ?, ?, ?)",
+    [
+      reqBody.fullname,
+      reqBody.gender,
+      reqBody.birthdate,
+      reqBody.school,
+      reqBody.schoolStart,
+      reqBody.class,
+    ],
+    (err, result) => {
+      errorResult(err, result, res);
+    }
+  );
+});
+
+/* ------------ Payments ------------ */
+app.post("/payments", async (req, res) => {
+  const reqBody = req.body;
+  connection.query(
+    "INSERT INTO payments (invoiceAmount, invoiceCreated, invoiceCurrency, invoiceHandle, customerHandle, subscriptionHandle) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [
+      reqBody.invoiceAmount,
+      reqBody.invoiceCreated,
+      reqBody.invoiceCurrency,
+      reqBody.invoiceHandle,
+      reqBody.customerHandle,
+      reqBody.subscriptionHandle,
+    ],
+    (err, result) => {
       errorResult(err, result, res);
     }
   );
