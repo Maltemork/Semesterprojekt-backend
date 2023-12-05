@@ -72,7 +72,6 @@ app.post("/sponsors", async (req, res) => {
             errorResult(err, result, res);
           }
         );
-        return;
       }
     }
     errorResult(err, result, res);
