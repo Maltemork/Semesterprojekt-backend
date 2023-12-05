@@ -53,7 +53,7 @@ app.post("/sponsors", async (req, res) => {
       randomId = "K" + (Math.floor(Math.random() * 9000) + 1000);
       if (!sponsorIds.has(randomId)) {
         connection.query(
-          "INSERT INTO sponsors (sponsorId, sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, aktive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "INSERT INTO sponsors (sponsorId, sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
           [
             randomId,
             reqBody.sponsorName,
@@ -66,7 +66,7 @@ app.post("/sponsors", async (req, res) => {
             reqBody.foreningLetId,
             reqBody.reepayHandleDonations,
             reqBody.paymentPlatform,
-            reqBody.aktive,
+            reqBody.active,
           ],
           (err, result) => {
             errorResult(err, result, res);
