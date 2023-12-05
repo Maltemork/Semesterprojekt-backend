@@ -72,9 +72,11 @@ app.post("/sponsors", async (req, res) => {
             errorResult(err, result, res);
           }
         );
+        break;
+      } else {
+        randomId = "K" + (Math.floor(Math.random() * 9000) + 1000);
       }
     }
-    errorResult(err, result, res);
   });
 });
 
