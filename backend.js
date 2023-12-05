@@ -42,42 +42,64 @@ app.get("/sponsors", async (req, res) => {
 });
 app.post("/sponsors", async (req, res) => {
   const reqBody = req.body;
-  connection.query("SELECT sponsorId FROM sponsors", (err, result) => {
+
+  try {
+    const selectResult = await new Promise((resolve, reject) => {
+      connection.query("SELECT sponsorId FROM sponsors", (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
     let randomId = 0;
     const sponsorIds = new Set(
-      result.map((id) => {
+      selectResult.map((id) => {
         return id.sponsorId;
       })
     );
+
     for (let i = 0; i < 200; i++) {
       randomId = "K" + (Math.floor(Math.random() * 9000) + 1000);
       if (!sponsorIds.has(randomId)) {
-        connection.query(
-          "INSERT INTO sponsors (sponsorId, sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-          [
-            randomId,
-            reqBody.sponsorName,
-            reqBody.sponsorEmail,
-            reqBody.privatErhverv,
-            reqBody.cprCvr,
-            reqBody.sponsorPhone,
-            reqBody.notes,
-            reqBody.reepayHandlePeriamma,
-            reqBody.foreningLetId,
-            reqBody.reepayHandleDonations,
-            reqBody.paymentPlatform,
-            reqBody.active,
-          ],
-          (err, result) => {
-            errorResult(err, result, res);
-          }
-        );
-        break;
-      } else {
-        randomId = "K" + (Math.floor(Math.random() * 9000) + 1000);
+        const insertResult = await new Promise((resolve, reject) => {
+          connection.query(
+            "INSERT INTO sponsors (sponsorId, sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, aktive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+              randomId,
+              reqBody.sponsorName,
+              reqBody.sponsorEmail,
+              reqBody.privatErhverv,
+              reqBody.cprCvr,
+              reqBody.sponsorPhone,
+              reqBody.notes,
+              reqBody.reepayHandlePeriamma,
+              reqBody.foreningLetId,
+              reqBody.reepayHandleDonations,
+              reqBody.paymentPlatform,
+              reqBody.aktive,
+            ],
+            (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            }
+          );
+        });
+        if (insertResult) {
+          console.log("Sponsor added!");
+          res.status(200).json({ message: "Sponsor added!" });
+          break;
+        }
       }
     }
-  });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 /* ------------ Children ------------ */
