@@ -43,7 +43,7 @@ app.get("/sponsors", async (req, res) => {
 app.post("/sponsors", async (req, res) => {
   const reqBody = req.body;
   connection.query(
-    "INSERT INTO sponsors (sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes) VALUES (?, ?, ?, ?, ?, ?)",
+    "INSERT INTO sponsors (sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       reqBody.sponsorName,
       reqBody.sponsorEmail,
@@ -51,6 +51,11 @@ app.post("/sponsors", async (req, res) => {
       reqBody.cprCvr,
       reqBody.sponsorPhone,
       reqBody.notes,
+      reqBody.reepayHandlePeriamma,
+      reqBody.foreningLetId,
+      reqBody.reepayHandleDonations,
+      reqBody.paymentPlatform,
+      reqBody.active,
     ],
     (err, result) => {
       errorResult(err, result, res);
