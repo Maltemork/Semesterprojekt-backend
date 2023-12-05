@@ -68,6 +68,7 @@ app.get("/children", async (req, res) => {
     }
   );
 });
+
 app.post("/children", async (req, res) => {
   const reqBody = req.body;
   connection.query(
@@ -87,6 +88,16 @@ app.post("/children", async (req, res) => {
 });
 
 /* ------------ Payments ------------ */
+app.get("/payments", async (req, res) => {
+  connection.query(
+    "SELECT * FROM payments ORDER BY invoiceCreated;",
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+
 app.post("/payments", async (req, res) => {
   const reqBody = req.body;
   connection.query(
