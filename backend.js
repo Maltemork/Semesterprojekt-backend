@@ -92,8 +92,7 @@ app.post("/sponsors", async (req, res) => {
         });
         if (insertResult) {
           console.log("Sponsor added!");
-          res.status(200).json({ message: "Sponsor added!" });
-          break;
+          return res.status(200).json({ message: "Sponsor added!" });
         }
       }
     }
