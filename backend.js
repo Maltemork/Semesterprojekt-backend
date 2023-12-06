@@ -40,7 +40,7 @@ app.get("/sponsors", async (req, res) => {
     }
   );
 });
-app.post("/sponsors", async (req, res) => {
+app.post("/sponsors/add", async (req, res) => {
   const reqBody = req.body;
 
   try {
