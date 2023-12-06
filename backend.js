@@ -114,20 +114,58 @@ app.get("/children", async (req, res) => {
 
 app.post("/children/add", async (req, res) => {
   const reqBody = req.body;
-  connection.query(
-    "INSERT INTO children (fullname, gender, birthdate, school, schoolStart, class) VALUES (?, ?, ?, ?, ?, ?)",
-    [
-      reqBody.fullname,
-      reqBody.gender,
-      reqBody.birthdate,
-      reqBody.school,
-      reqBody.schoolStart,
-      reqBody.class,
-    ],
-    (err, result) => {
-      errorResult(err, result, res);
+
+  try {
+    const selectResult = await new Promise((resolve, reject) => {
+      connection.query("SELECT childNo FROM children", (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    let randomId = 0;
+    const childNos = new Set(
+      selectResult.map((id) => {
+        return id.childNo;
+      })
+    );
+
+    for (let i = 0; i < 200; i++) {
+      randomId = "04." + (Math.floor(Math.random() * 90000) + 10000);
+      if (!childNos.has(randomId)) {
+        const insertResult = await new Promise((resolve, reject) => {
+          connection.query(
+            "INSERT INTO children (childNo, fullname, gender, birthdate, school, schoolStart, class) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [
+              randomId,
+              reqBody.fullname,
+              reqBody.gender,
+              reqBody.birthdate,
+              reqBody.school,
+              reqBody.schoolStart,
+              reqBody.class,
+            ],
+            (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            }
+          );
+        });
+        if (insertResult) {
+          console.log("Child added!");
+          return res.status(200).json({ message: "Child added!" });
+        }
+      }
     }
-  );
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 /* ------------ Payments ------------ */
@@ -143,18 +181,56 @@ app.get("/payments", async (req, res) => {
 
 app.post("/payments/add", async (req, res) => {
   const reqBody = req.body;
-  connection.query(
-    "INSERT INTO payments (invoiceAmount, invoiceCreated, invoiceCurrency, invoiceHandle, customerHandle, subscriptionHandle) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [
-      reqBody.invoiceAmount,
-      reqBody.invoiceCreated,
-      reqBody.invoiceCurrency,
-      reqBody.invoiceHandle,
-      reqBody.customerHandle,
-      reqBody.subscriptionHandle,
-    ],
-    (err, result) => {
-      errorResult(err, result, res);
+
+  try {
+    const selectResult = await new Promise((resolve, reject) => {
+      connection.query("SELECT invoiceHandle FROM payments", (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+
+    let randomId = 0;
+    const invoiceHandles = new Set(
+      selectResult.map((id) => {
+        return id.invoiceHandle;
+      })
+    );
+
+    for (let i = 0; i < 200; i++) {
+      randomId = "inv-" + (Math.floor(Math.random() * 9000) + 1000);
+      if (!invoiceHandles.has(randomId)) {
+        const insertResult = await new Promise((resolve, reject) => {
+          connection.query(
+            "INSERT INTO payments (invoiceHandle, invoiceAmount, invoiceCreated, invoiceCurrency, invoiceHandle, customerHandle, subscriptionHandle) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+              randomId,
+              reqBody.invoiceAmount,
+              reqBody.invoiceCreated,
+              reqBody.invoiceCurrency,
+              reqBody.invoiceHandle,
+              reqBody.customerHandle,
+              reqBody.subscriptionHandle,
+            ],
+            (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            }
+          );
+        });
+        if (insertResult) {
+          console.log("Child added!");
+          return res.status(200).json({ message: "Child added!" });
+        }
+      }
     }
-  );
+  } catch (error) {
+    console.error(error);
+  }
 });
