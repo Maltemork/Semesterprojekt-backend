@@ -205,7 +205,7 @@ app.post("/payments/add", async (req, res) => {
       if (!invoiceHandles.has(randomId)) {
         const insertResult = await new Promise((resolve, reject) => {
           connection.query(
-            "INSERT INTO payments (invoiceHandle, invoiceAmount, invoiceCreated, invoiceCurrency, invoiceHandle, customerHandle, subscriptionHandle) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO payments (invoiceHandle, invoiceAmount, invoiceCreated, invoiceCurrency, invoiceHandle, customerHandle, subscriptionHandle) VALUES (?, ?, ?, ?, ?, ?, ?)",
             [
               randomId,
               reqBody.invoiceAmount,
