@@ -112,7 +112,7 @@ app.get("/children", async (req, res) => {
   );
 });
 
-app.post("/children", async (req, res) => {
+app.post("/children/add", async (req, res) => {
   const reqBody = req.body;
   connection.query(
     "INSERT INTO children (fullname, gender, birthdate, school, schoolStart, class) VALUES (?, ?, ?, ?, ?, ?)",
@@ -141,7 +141,7 @@ app.get("/payments", async (req, res) => {
   );
 });
 
-app.post("/payments", async (req, res) => {
+app.post("/payments/add", async (req, res) => {
   const reqBody = req.body;
   connection.query(
     "INSERT INTO payments (invoiceAmount, invoiceCreated, invoiceCurrency, invoiceHandle, customerHandle, subscriptionHandle) VALUES (?, ?, ?, ?, ?, ?, ?)",
