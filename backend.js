@@ -54,13 +54,13 @@ app.post("/sponsors/add", async (req, res) => {
       });
     });
 
-    let randomId = 0;
     const sponsorIds = new Set(
       selectResult.map((id) => {
         return id.sponsorId;
       })
     );
 
+    let randomId = 0;
     for (let i = 0; i < 200; i++) {
       randomId = "K" + (Math.floor(Math.random() * 9000) + 1000);
       if (!sponsorIds.has(randomId)) {
@@ -126,13 +126,13 @@ app.post("/children/add", async (req, res) => {
       });
     });
 
-    let randomId = 0;
     const childNos = new Set(
       selectResult.map((id) => {
         return id.childNo;
       })
     );
 
+    let randomId = 0;
     for (let i = 0; i < 200; i++) {
       randomId = "04." + (Math.floor(Math.random() * 90000) + 10000);
       if (!childNos.has(randomId)) {
@@ -193,13 +193,13 @@ app.post("/payments/add", async (req, res) => {
       });
     });
 
-    let randomId = 0;
     const invoiceHandles = new Set(
       selectResult.map((id) => {
         return id.invoiceHandle;
       })
     );
 
+    let randomId = 0;
     for (let i = 0; i < 200; i++) {
       randomId = "inv-" + (Math.floor(Math.random() * 9000) + 1000);
       if (!invoiceHandles.has(randomId)) {
@@ -225,8 +225,8 @@ app.post("/payments/add", async (req, res) => {
           );
         });
         if (insertResult) {
-          console.log("Child added!");
-          return res.status(200).json({ message: "Child added!" });
+          console.log("Payment added!");
+          return res.status(200).json({ message: "Payment added!" });
         }
       }
     }
