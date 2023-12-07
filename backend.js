@@ -40,6 +40,17 @@ app.get("/sponsors", async (req, res) => {
     }
   );
 });
+app.get("/sponsors/:sponsorId", async (req, res) => {
+  const id = req.params.sponsorId;
+  connection.query(
+    "SELECT * FROM sponsors WHERE sponsorId = ?;",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
 app.post("/sponsors/add", async (req, res) => {
   const reqBody = req.body;
 
@@ -100,6 +111,42 @@ app.post("/sponsors/add", async (req, res) => {
     console.error(error);
   }
 });
+app.delete("/sponsors/:sponsorId/delete", async (req, res) => {
+  const id = req.params.sponsorId;
+  connection.query(
+    "DELETE FROM sponsors WHERE sponsorId = ?",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+app.put("/sponsors/:sponsorId/update", async (req, res) => {
+  const id = req.params.sponsorId;
+  const reqBody = req.body;
+  connection.query(
+    "UPDATE sponsors SET sponsorName=?, sponsorEmail=?, privatErhverv=?, cprCvr=?, sponsorPhone=?, notes=?, reepayHandlePeriamma=?, foreningLetId=?, reepayHandleDonations=?, paymentPlatform=?, active=? WHERE sponsorId = ?",
+    [
+      reqBody.sponsorName,
+      reqBody.sponsorEmail,
+      reqBody.privatErhverv,
+      reqBody.cprCvr,
+      reqBody.sponsorPhone,
+      reqBody.notes,
+      reqBody.reepayHandlePeriamma,
+      reqBody.foreningLetId,
+      reqBody.reepayHandleDonations,
+      reqBody.paymentPlatform,
+      reqBody.active,
+      id,
+    ],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
+});
 
 /* ------------ Children ------------ */
 app.get("/children", async (req, res) => {
@@ -111,7 +158,17 @@ app.get("/children", async (req, res) => {
     }
   );
 });
-
+app.get("/children/:childNo", async (req, res) => {
+  const id = req.params.childNo;
+  connection.query(
+    "SELECT * FROM children WHERE childNo = ?;",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
 app.post("/children/add", async (req, res) => {
   const reqBody = req.body;
 
@@ -167,6 +224,37 @@ app.post("/children/add", async (req, res) => {
     console.error(error);
   }
 });
+app.delete("/children/:childNo/delete", async (req, res) => {
+  const id = req.params.childNo;
+  connection.query(
+    "DELETE FROM children WHERE childNo = ?",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+app.put("/children/:childNo/update", async (req, res) => {
+  const id = req.params.childNo;
+  const reqBody = req.body;
+  connection.query(
+    "UPDATE children SET childNo=?, fullname=?, gender=?, birthdate=?, school=?, schoolStart=?, class=? WHERE childNo=?",
+    [
+      reqBody.fullname,
+      reqBody.gender,
+      reqBody.birthdate,
+      reqBody.school,
+      reqBody.schoolStart,
+      reqBody.class,
+      id,
+    ],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
+});
 
 /* ------------ Payments ------------ */
 app.get("/payments", async (req, res) => {
@@ -178,7 +266,17 @@ app.get("/payments", async (req, res) => {
     }
   );
 });
-
+app.get("/payments/:invoiceHandle", async (req, res) => {
+  const id = req.params.invoiceHandle;
+  connection.query(
+    "SELECT * FROM payments WHERE invoiceHandle = ?;",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
 app.post("/payments/add", async (req, res) => {
   const reqBody = req.body;
 
@@ -232,4 +330,34 @@ app.post("/payments/add", async (req, res) => {
   } catch (error) {
     console.error(error);
   }
+});
+app.delete("/payments/:invoiceHandle/delete", async (req, res) => {
+  const id = req.params.invoiceHandle;
+  connection.query(
+    "DELETE FROM payments WHERE invoiceHandle = ?",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+app.put("/payments/:invoiceHandle/update", async (req, res) => {
+  const id = req.params.invoiceHandle;
+  const reqBody = req.body;
+  connection.query(
+    "UPDATE payments SET invoiceAmount=?, invoiceCreated=?, invoiceCurrency=?, customerHandle=?, subscriptionHandle=? WHERE invoiceHandle=?",
+    [
+      reqBody.invoiceAmount,
+      reqBody.invoiceCreated,
+      reqBody.invoiceCurrency,
+      reqBody.customerHandle,
+      reqBody.subscriptionHandle,
+      id,
+    ],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
 });
