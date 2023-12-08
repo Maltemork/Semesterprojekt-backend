@@ -143,7 +143,7 @@ app.put("/sponsors/:sponsorId/update", async (req, res) => {
     ],
     (err, result) => {
       // print error or respond with result.
-      errorResult(err, result, response);
+      errorResult(err, result, res);
     }
   );
 });
@@ -251,7 +251,7 @@ app.put("/children/:childNo/update", async (req, res) => {
     ],
     (err, result) => {
       // print error or respond with result.
-      errorResult(err, result, response);
+      errorResult(err, result, res);
     }
   );
 });
@@ -357,7 +357,7 @@ app.put("/payments/:invoiceHandle/update", async (req, res) => {
     ],
     (err, result) => {
       // print error or respond with result.
-      errorResult(err, result, response);
+      errorResult(err, result, res);
     }
   );
 });
