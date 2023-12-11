@@ -239,7 +239,7 @@ app.put("/children/:childNo/update", async (req, res) => {
   const id = req.params.childNo;
   const reqBody = req.body;
   connection.query(
-    "UPDATE children SET childNo=?, fullname=?, gender=?, birthdate=?, school=?, schoolStart=?, class=? WHERE childNo=?",
+    "UPDATE children SET fullname=?, gender=?, birthdate=?, school=?, schoolStart=?, class=? WHERE childNo=?",
     [
       reqBody.fullname,
       reqBody.gender,
