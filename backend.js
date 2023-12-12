@@ -25,6 +25,7 @@ app.get("/", (req, res) => res.json({ message: "Connection made!" }));
 function errorResult(err, result, response) {
   if (err) {
     console.log(err);
+    response.status(500).json({ error: "Server Error" });
   } else {
     response.json(result);
   }
@@ -44,6 +45,17 @@ app.get("/sponsors/:sponsorId", async (req, res) => {
   const id = req.params.sponsorId;
   connection.query(
     "SELECT * FROM sponsors WHERE sponsorId = ?;",
+    [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+app.get("/sponsors/:sponsorId/payments", async (req, res) => {
+  const id = req.params.sponsorId;
+  connection.query(
+    "SELECT * FROM payments WHERE customerHandle = ?",
     [id],
     (err, result) => {
       // print error or respond with result.
