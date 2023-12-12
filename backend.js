@@ -195,7 +195,7 @@ app.post("/children/add", async (req, res) => {
       if (!childNos.has(randomId)) {
         const insertResult = await new Promise((resolve, reject) => {
           connection.query(
-            "INSERT INTO children (childNo, fullname, gender, birthdate, school, type=?, schoolStart, class) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO children (childNo, fullname, gender, birthdate, school, type, schoolStart, class) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             [
               randomId,
               reqBody.fullname,
