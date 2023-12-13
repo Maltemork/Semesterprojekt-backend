@@ -55,7 +55,7 @@ app.get("/sponsors/:sponsorId", async (req, res) => {
 app.get("/sponsors/:sponsorId/payments", async (req, res) => {
   const id = req.params.sponsorId;
   connection.query(
-    "SELECT * FROM payments WHERE customerHandle = ?",
+    "SELECT * FROM payments WHERE customerHandle = ? ORDER BY  invoiceCreated DESC",
     [id],
     (err, result) => {
       // print error or respond with result.
