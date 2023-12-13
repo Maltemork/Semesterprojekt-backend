@@ -252,7 +252,7 @@ app.put("/children/:childNo/update", async (req, res) => {
   const id = req.params.childNo;
   const reqBody = req.body;
   connection.query(
-    "UPDATE children SET fullname=?, gender=?, birthdate=?, school=?, schoolStart=?, class=?, subitems=?, type=?, sponsoredBy=?, secondSponsor=?, notes=? WHERE childNo=?",
+    "UPDATE children SET fullname=?, gender=?, birthdate=?, school=?, schoolStart=?, class=?, subitems=?, type=?, notes=? WHERE childNo=?",
     [
       reqBody.fullname,
       reqBody.gender,
@@ -262,8 +262,6 @@ app.put("/children/:childNo/update", async (req, res) => {
       reqBody.class,
       reqBody.subitems,
       reqBody.type,
-      reqBody.sponsoredBy,
-      reqBody.secondSponsor,
       reqBody.notes,
       id,
     ],
