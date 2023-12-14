@@ -237,7 +237,7 @@ app.post("/children/add", async (req, res) => {
     console.error(error);
   }
 });
-app.post("children/:childNo/addSponsor", async (req, res) => {
+app.post("/children/:childNo/addSponsor", async (req, res) => {
   const childNo = req.params.childNo;
   const sponsorId = req.body.sponsoredBy;
   connection.query(
