@@ -305,6 +305,12 @@ app.get("/payments/:invoiceHandle", async (req, res) => {
     }
   );
 });
+app.get("/payments/plans", async (req, res) => {
+  connection.query("SELECT * FROM payment_plans", (err, result) => {
+    // print error or respond with result.
+    errorResult(err, result, res);
+  });
+});
 app.post("/payments/add", async (req, res) => {
   const reqBody = req.body;
 
@@ -374,11 +380,11 @@ app.put("/payments/:invoiceHandle/update", async (req, res) => {
   const id = req.params.invoiceHandle;
   const reqBody = req.body;
   connection.query(
-    "UPDATE payments SET customerHandle=?, subscriptionHandle=?, planHandle=?, invoiceAuthorized=?, invoiceAuthorizedAmount=?, invoiceCreditedAmount=?, invoiceAmount=?, invoiceCreated=?, invoiceCurrency=?, invoiceCancelled=?, invoiceState=?, invoiceDue=?, invoiceDunningStart=?, invoiceDunningSuccess=?, invoiceDunningFailed=?, invoiceNumber=?, invoiceRefundedAmount=?, invoiceSettled=?, invoiceSettledAmount=?, invoiceOrgAmount=?, invoiceOrgSubscription=?, invoicePeriodFrom=?, invoicePeriodTo=? WHERE invoiceHandle=?",
+    "UPDATE payments SET customerHandle=?, subscriptionHandle=?, paymentPlanId=?, invoiceAuthorized=?, invoiceAuthorizedAmount=?, invoiceCreditedAmount=?, invoiceAmount=?, invoiceCreated=?, invoiceCurrency=?, invoiceCancelled=?, invoiceState=?, invoiceDue=?, invoiceDunningStart=?, invoiceDunningSuccess=?, invoiceDunningFailed=?, invoiceNumber=?, invoiceRefundedAmount=?, invoiceSettled=?, invoiceSettledAmount=?, invoiceOrgAmount=?, invoiceOrgSubscription=?, invoicePeriodFrom=?, invoicePeriodTo=? WHERE invoiceHandle=?",
     [
       reqBody.customerHandle,
       reqBody.subscriptionHandle,
-      reqBody.planHandle,
+      reqBody.paymentPlanId,
       reqBody.invoiceAuthorized,
       reqBody.invoiceAuthorizedAmount,
       reqBody.invoiceCreditedAmount,
