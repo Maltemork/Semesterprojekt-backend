@@ -89,13 +89,14 @@ app.post("/sponsors/add", async (req, res) => {
       if (!sponsorIds.has(randomId)) {
         const insertResult = await new Promise((resolve, reject) => {
           connection.query(
-            "INSERT INTO sponsors (sponsorId, sponsorName, sponsorEmail, privatErhverv, cprCvr, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO sponsors (sponsorId, sponsorName, sponsorEmail, privatErhverv, cprCvr, subitems, sponsorPhone, notes, reepayHandlePeriamma, foreningLetId, reepayHandleDonations, paymentPlatform, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
               randomId,
               reqBody.sponsorName,
               reqBody.sponsorEmail,
               reqBody.privatErhverv,
               reqBody.cprCvr,
+              reqBody.subitems,
               reqBody.sponsorPhone,
               reqBody.notes,
               reqBody.reepayHandlePeriamma,
@@ -175,6 +176,17 @@ app.get("/children/:childNo", async (req, res) => {
   connection.query(
     "SELECT * FROM children WHERE childNo = ?;",
     [id],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
+    }
+  );
+});
+app.get("/children/:childNo/sponsors", async (req, res) => {
+  const childNo = req.params.childNo;
+  connection.query(
+    "SELECT sponsors.sponsorId FROM sponsors INNER JOIN children_sponsors ON sponsors.sponsorId = children_sponsors.sponsorsSponsorId INNER JOIN children ON children.childNo = children_sponsors.childrenChildNo WHERE children.childNo = ?",
+    [childNo],
     (err, result) => {
       // print error or respond with result.
       errorResult(err, result, res);
