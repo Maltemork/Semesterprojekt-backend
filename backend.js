@@ -237,9 +237,31 @@ app.post("/children/add", async (req, res) => {
     console.error(error);
   }
 });
-app.post("children/:childNo/addSponsor/:sponsorId", async (req, res) => {
+app.post("children/:childNo/addSponsor", async (req, res) => {
   const childNo = req.params.childNo;
-  const sponsorId = req.params.sponsorId;
+  const sponsoredBy = req.body.sponsoredBy;
+  const secondSponsor = req.body.secondSponsor;
+  console.log(childNo, sponsorId);
+  if (sponsoredBy) {
+    connection.query(
+      "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
+      [childNo, sponsoredBy],
+      (err, result) => {
+        // print error or respond with result.
+        errorResult(err, result, res);
+      }
+    );
+    if (secondSponsor) {
+      connection.query(
+        "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
+        [childNo, secondSponsor],
+        (err, result) => {
+          // print error or respond with result.
+          errorResult(err, result, res);
+        }
+      );
+    }
+  }
   connection.query(
     "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
     [childNo, sponsorId],
