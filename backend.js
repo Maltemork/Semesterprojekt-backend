@@ -239,29 +239,15 @@ app.post("/children/add", async (req, res) => {
 });
 app.post("children/:childNo/addSponsor", async (req, res) => {
   const childNo = req.params.childNo;
-  const sponsoredBy = req.body.sponsoredBy;
-  const secondSponsor = req.body.secondSponsor;
-  console.log(childNo, sponsorId);
-  if (sponsoredBy) {
-    connection.query(
-      "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
-      [childNo, sponsoredBy],
-      (err, result) => {
-        // print error or respond with result.
-        errorResult(err, result, res);
-      }
-    );
-    if (secondSponsor) {
-      connection.query(
-        "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
-        [childNo, secondSponsor],
-        (err, result) => {
-          // print error or respond with result.
-          errorResult(err, result, res);
-        }
-      );
+  const sponsorId = req.body.sponsoredBy;
+  connection.query(
+    "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
+    [childNo, sponsorId],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, res);
     }
-  }
+  );
 });
 app.delete("/children/:childNo/delete", async (req, res) => {
   const id = req.params.childNo;
