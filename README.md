@@ -11,6 +11,7 @@ Fra dette link kan man prøve at tilgå nogle af de routes der er lavet f.eks: <
 Det også muligt at opsætte backenden lokalt, men her skal der ændres lidt i koden. <br>
 Først skal der installeres node.js via terminalen med kommandoen: <br>
 *npm install node* <br>
+<br>
 Da der allerede er angivet dependecies i package.json vil den automatisk installere resten, <br>
 som f.eks. express og cors.
 For at forbinde til en port skal der laves en .env-fil der indeholder informationerne om databasen. <br>
