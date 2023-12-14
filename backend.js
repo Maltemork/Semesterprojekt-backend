@@ -262,14 +262,6 @@ app.post("children/:childNo/addSponsor", async (req, res) => {
       );
     }
   }
-  connection.query(
-    "INSERT INTO children_sponsors (childrenChildNo, sponsorsSponsorId) VALUES (?, ?)",
-    [childNo, sponsorId],
-    (err, result) => {
-      // print error or respond with result.
-      errorResult(err, result, res);
-    }
-  );
 });
 app.delete("/children/:childNo/delete", async (req, res) => {
   const id = req.params.childNo;
